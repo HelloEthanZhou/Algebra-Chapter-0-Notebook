@@ -7,4 +7,5 @@
 - `main.tex`：学习笔记的LaTeX源代码文件
 - `chapter.text`：笔记的某章节
 - `elegantbook.cls`：ElegantbBook模板源代码
+- `main.pdf`：学习笔记PDF文件
 - `Algebra Chapter 0-Paolo Aluff.pdf`：教材
