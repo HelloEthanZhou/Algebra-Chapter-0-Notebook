@@ -1,0 +1,1183 @@
+% 导入配置
+% \input{../config}
+
+% \begin{document}
+	
+\chapter{集合论与范畴论}
+
+\section{朴素集合论}
+
+\subsection{集合}
+
+\begin{theorem}{Russell悖论}
+	\href{https://en.wikipedia.org/wiki/Russell%27s_paradox}{Russell悖论}：对于集合$R=\{r:r\notin r\}$，成立
+	$$
+	R\in R\iff R\notin R
+	$$
+\end{theorem}
+
+\subsection{集合的关系}
+
+\begin{itemize}
+	\item 集合：$\varnothing,\N,\Z,\Q,\R,\C$
+	\item 量词：$\exists,\forall,\exists!$
+	\item 包含：$\sub,\subseteq,\subsetneq$
+	\item 势：$|S|$
+	\item 幂集(power set)：$\mathscr{P}(S)=\{T\sub S\}$
+\end{itemize}
+
+\subsection{集合的运算}
+
+\begin{itemize}
+	\item 运算：$\cup,\cap,\setminus,\sqcup,\times$
+\end{itemize}
+
+\subsection{不交并与积}
+
+\begin{definition}{不交并 disjoint union}
+	$$
+	A\sqcup B=(\{0\}\times A)\times(\{1\}\times B)
+	$$
+\end{definition}
+
+\begin{definition}{积 product}
+	$$
+	A\times B=\{ (a,b):a\in A,b\in B \}
+	$$
+\end{definition}
+
+\subsection{等价关系，划分与商}
+
+\begin{definition}{关系 relation}
+	定义集合$S$上的一个关系为$R\sub S\times S$，称$a$和$b$存在关系$R$，并记做记作$aRb$，如果$(a,b)\in R$。
+\end{definition}
+
+\begin{definition}{等价关系 equivalence relation}
+	称集合$S$上的关系$\sim $为等价关系，如果其满足如下性质。
+	\begin{enumerate}
+		\item 自反性(reflexivity)：$a\sim a$
+		\item 对称性(symmetry)：$a\sim b\implies b\sim a$
+		\item 传递性(transitivity)：$a\sim b,b\sim c\implies a\sim c$
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}{等价类 equivalence class}
+	对于$a\in S$，定义$a$关于等价关系$\sim$的等价类为
+	$$
+	[a]_\sim=\{ s\in S:a\sim s \}
+	$$
+	
+	对于$A\sub S$，定义$A$关于等价关系$\sim$的等价类为
+	$$
+	[A]_\sim=\{ s\in S:\exists a\in A,\text{ s.t. }a\sim s \}
+	$$
+\end{definition}
+
+\begin{example}
+	好朋友：满足自反性和对称性，但不满足传递性。
+\end{example}
+
+\begin{proposition}{等价类的性质}
+	$$
+	\left[ \bigcup_{\lambda\in\Lambda}S_\lambda \right]_\sim
+	=\bigcup_{\lambda\in\Lambda}[S_\lambda]_\sim=\left[ \bigcup_{\lambda\in\Lambda}[S_\lambda]_\sim \right]_\sim,\qquad
+	\left[ \bigcap_{\lambda\in\Lambda}S_\lambda \right]_\sim
+	\sub \bigcap_{\lambda\in\Lambda}[S_\lambda]_\sim=\left[ \bigcap_{\lambda\in\Lambda}[S_\lambda]_\sim \right]_\sim
+	$$
+\end{proposition}
+
+\begin{definition}{划分 partition}
+	称子集族$\mathscr{P}\sub\mathscr{P}(S)$为集合$S$的一个划分，如果
+	$$
+	\bigsqcup_{T\in\mathscr{P}}T=S
+	$$
+	
+	定义集合$S$关于等价关系$\sim$的划分为
+	$$
+	\mathscr{P}_\sim=\{ [a]_\sim:a\in S \}
+	$$
+\end{definition}
+
+\begin{definition}{商 quotient}
+	定义集合$S$关于等价关系$\sim$的商为
+	$$
+	S/\sim=\{ [a]_\sim:a\in S \}
+	$$
+\end{definition}
+
+\begin{example}
+	对于实数域$\R$，定义等价关系$\sim$：
+	$$
+	a\sim b\iff a-b\in\Z
+	$$
+	对于实数平面$\R^2$，定义等价关系$\approx$：
+	$$
+	(a_1,a_2)\approx(b_1,b_2)\iff
+	a_1-b_1\in\Z,a_2-b_2\in\Z
+	$$
+	那么
+	$$
+	\R/\sim=[0,1),\qquad \R^2/\approx [0,1)\times[0,1)
+	$$
+\end{example}
+
+\begin{theorem}{等价类的不交性}{等价关系的不交性}
+	如果$\sim$为集合$S$上的等价关系，那么对于任意$a,b\in S$，或$[a]_\sim=[b]_\sim$成立，或$[a]_\sim\cap [b]_\sim=\varnothing$成立，且仅成立其中之一。
+\end{theorem}
+
+\begin{proof}
+	第一，显然二者不能同时成立。事实上，如果$[a]_\sim=[b]_\sim$且$[a]_\sim\cap [b]_\sim=\varnothing$，那么$[a]_\sim=[b]_\sim=\varnothing$，但是$a\in[a]_\sim$，矛盾！
+	
+	第二，如果$[a]_\sim=[b]_\sim$，那么命题得证！如果$[a]_\sim\ne[b]_\sim$，我们来证明$[a]_\sim\cap [b]_\sim=\varnothing$。反证，假设存在$c\in S$，使得$c\in [a]_\sim\cap[b]_\sim$，那么$c\in [a]_\sim$且$c\in [b]_\sim$。任取$m\in[a]_\sim$，由于$c\in [a]_\sim$，那么$c\sim m$，又$c\in [b]_\sim$，那么$m\in [b]_\sim$，于是$[a]_\sim\sub[b]_\sim$，同理$[b]_\sim\sub[a]_\sim$，进而$[a]_\sim=[b]_\sim$，矛盾！因此$[a]_\sim\cap [b]_\sim=\varnothing$。
+\end{proof}
+
+\begin{theorem}{划分$\iff$等价关系}{1.1.2}
+	\begin{enumerate}
+		\item 如果子集族$\mathscr{P}\sub \mathscr{P}(S)$为集合$S$上的划分，那么存在$S$上的等价关系$\sim$，使得$\mathscr{P}=\mathscr{P}_\sim$。
+		\item 如果关系$\sim$为集合$S$上的等价关系，那么子集族$\mathscr{P}_\sim$为$S$上的一个划分。
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	对于1，如果子集族$\mathscr{P}\sub \mathscr{P}(S)$为集合$S$上的划分，那么
+	$$
+	\bigsqcup_{ T\in\mathscr{P}}T_\lambda=S
+	$$
+	定义$S$上的一个等价关系：
+	$$
+	a\sim b\iff 
+	\exists T\in\mathscr{P},a,b\in T
+	$$
+	
+	事实上，对于任意$a\in S$，由于$\displaystyle\bigcup_{ T\in\mathscr{P}}T_\lambda=S$，那么存在$T\in\mathscr{P}$，使得成立$a\in T$，自反性得证！
+	
+	对于任意$a,b\in S$，如果$a\sim b$，那么存在$T\in\mathscr{P}$，使得成立$a,b\in T$，显然$b\sim a$，对称性得证！
+	
+	对于任意$a,b,c\in S$，如果$a\sim b,b\sim c$，那么存在$T_1,T_2\in\mathscr{P}$，使得成立$a,b\in T_1,b,c\in T_2$，于是$b\in T_1\cap T_2$。而$\mathscr{P}$中元素的不交性保证了$T_1=T_2$，进而$a,c\in T_1=T_2$，即$a\sim c$，传递性得证！
+	
+	于是$\sim$为$S$上的等价关系。由$\sim$的定义，不难发现对于任意$T\in\mathscr{P}$，任取$t\in T\sub S$，那么$T=[t]_\sim$，这是因为
+	$$
+	T=[t]_\sim\iff
+	T=\{ s\in S:s\sim t \}\iff
+	T=\{ s\in S:\exists R\in\mathscr{P},s,t\in R\}\iff
+	T=\{ s\in T \}
+	$$
+	
+	下面我们依托这个事实来证明：$\mathscr{P}=\mathscr{P}_\sim$。
+	
+	一方面，任取$T\in\mathscr{P}$，那么任取$t\in T\sub S$，可得$T=[t]_\sim \in\mathscr{P}_\sim$，于是$\mathscr{P}\sub\mathscr{P}_\sim$。
+	
+	另一方面，任取$[t]_\sim\in\mathscr{P}_\sim$，由于$\displaystyle\bigcup_{ T\in\mathscr{P}}T_\lambda=S\ni  t$，那么存在$T\in\mathscr{P}$，使得成立$t\in T$，于是$[t]_\sim =T\in \mathscr{P}$，于是$\mathscr{P}\supset\mathscr{P}_\sim$。
+	
+	综合两方面，$\mathscr{P}=\mathscr{P}_\sim$成立，原命题得证！
+	
+	对于2，如果关系$\sim$为集合$S$上的等价关系，那么$\mathscr{P}_\sim$中元素的不交性由定理\ref{thm:等价关系的不交性}保证。我们来证明
+	$$
+	\bigcup_{T\in\mathscr{P}_\sim}T=S
+	\iff\bigcup_{a\in S}[a]_{\sim}=S
+	$$
+	
+	一方面，由于$[a]_\sim\sub S$，于是$\displaystyle\bigcup_{a\in S}[a]_{\sim}\sub S$。
+	
+	另一方面，由于对于任意$a\in S$，显然$a\in[a]_\sim$，于是$\displaystyle\bigcup_{a\in S}[a]_{\sim}\supset S$。综合两方面，$\displaystyle\bigcup_{a\in S}[a]_{\sim}=S$。
+	
+	综上所述，原命题得证！
+\end{proof}
+
+\begin{definition}{第二类Stirling数}
+	称将$n$个两两不同的元素划分为$k$个互不区分的非空子集的方案数称为第二类Stirling数，记作$S(n,k)$。递推公式如下
+	$$
+	S(n+1,k)=S(n,k-1)+kS(n,k)
+	$$
+	通项公式如下：
+	$$
+	S(n,k)=\frac{1}{k!}\sum_{i=0}^{k}(-1)^k{k\choose i}(k-i)^n
+	$$
+\end{definition}
+
+\begin{definition}{Bell数}
+	称将$n$个两两不同的元素划分为互不区分的非空子集的方案数为第$n$个Bell数，记作$B(n)$。解析表达式为
+	$$
+	B(n)=\sum_{k=0}^{n}S(n,k)=\sum_{k=0}^{n}\sum_{i=0}^{k}(-1)^k\frac{1}{k!}{k\choose i}(k-i)^n
+	$$
+\end{definition}
+
+\begin{proposition}
+	$n$个元素的集合上可以定义$B(n)$个不同的等价关系，其中$B(n)$为第$n$个Bell数。
+\end{proposition}
+
+\begin{table}[h]
+	\centering
+	\caption{第二类Stirling数与Bell数表}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			$n$ & $S(n,0)$ & $S(n,1)$ & $S(n,2)$ & $S(n,3)$ & $S(n,4)$ & $S(n,5)$ & $S(n,6)$ & $S(n,7)$ & $S(n,8)$ & $S(n,9)$ & $S(n,10)$ & $B(n)$ \\
+			\hline
+			$0$ & $1$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $1$ \\
+			\hline
+			$1$ & $0$ & $1$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $1$ \\
+			\hline
+			$2$ & $0$ & $1$ & $1$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $2$ \\
+			\hline
+			$3$ & $0$ & $1$ & $3$ & $1$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $5$ \\
+			\hline
+			$4$ & $0$ & $1$ & $7$ & $6$ & $1$ & $0$ & $0$ & $0$ & $0$ & $0$ & $0$ & $15$ \\
+			\hline
+			$5$ & $0$ & $1$ & $15$ & $25$ & $10$ & $1$ & $0$ & $0$ & $0$ & $0$ & $0$ & $52$ \\
+			\hline
+			$6$ & $0$ & $1$ & $31$ & $90$ & $65$ & $15$ & $1$ & $0$ & $0$ & $0$ & $0$ & $203$ \\
+			\hline
+			$7$ & $0$ & $1$ & $63$ & $301$ & $350$ & $140$ & $21$ & $1$ & $0$ & $0$ & $0$ & $877$ \\
+			\hline
+			$8$ & $0$ & $1$ & $127$ & $966$ & $1701$ & $1050$ & $266$ & $28$ & $1$ & $0$ & $0$ & $4140$ \\
+			\hline
+			$9$ & $0$ & $1$ & $255$ & $3025$ & $7770$ & $6951$ & $2646$ & $462$ & $36$ & $1$ & $0$ & $21147$ \\
+			\hline
+			$10$ & $0$ & $1$ & $511$ & $9330$ & $34105$ & $42525$ & $22827$ & $5880$ & $750$ & $45$ & $1$ & $115975$ \\
+			\hline
+		\end{tabular}%
+	}
+\end{table}
+
+\section{集合间的函数}
+
+\subsection{定义}
+
+\begin{definition}{函数 function}
+	称$f$为定义域为$A$，陪域为$B$的函数，如果对于任意$a\in A$，存在且存在唯一$b\in B$，使得成立$f(a)=b$。记作
+	\begin{align*}
+		f: \begin{aligned}[t]
+			A&\longrightarrow B\\
+			a&\longmapsto f(a)
+		\end{aligned}
+	\end{align*}
+	或者以图(diagram)表示
+	$$
+	\xymatrix{
+		A \ar^f[r] &B
+	}
+	$$
+\end{definition}
+
+\begin{definition}{图像 graph}
+	对于函数$f:A\to B$，定义其图像为
+	$$
+	\Gamma_f=\{ (a,b):a\in A,b=f(a) \}\sub A\times B
+	$$
+\end{definition}
+
+\begin{proposition}
+	对于函数$f:A\to B$，成立$\Gamma_f\cong A$。
+\end{proposition}
+
+\begin{proof}
+	定义函数
+	\function{\varphi}{A}{\Gamma_f}{a}{(a,f(a))}
+	显然$\varphi$为双射。
+\end{proof}
+
+\begin{definition}{单位函数 identity function}
+	\begin{align*}
+		\mathbbm{1}_A:\begin{aligned}[t]
+			A&\longrightarrow A\\
+			a&\longmapsto a
+		\end{aligned}
+	\end{align*}
+\end{definition}
+
+\begin{definition}
+	定义$A\to B$上的所有函数构成集合$B^A=\{ f:A\to B \}$。
+\end{definition}
+
+\begin{definition}{函数在子集上的限制}
+	对于函数$f:A\to B$，以及$S\sub A$，定义
+	\begin{align*}
+		f|_S:\begin{aligned}[t]
+			S&\longrightarrow B\\
+			s&\longmapsto f(s)
+		\end{aligned}
+	\end{align*}
+\end{definition}
+
+\begin{definition}{像 image}
+	对于函数$f:A\to B$，定义子集$S\subset A$的像为
+	$$
+	f(S)=\{ f(s):s\in S \}
+	$$
+\end{definition}
+
+\begin{definition}{原像 preimage}
+	对于函数$f:A\to B$，定义子集$T\subset B$的原像为
+	$$
+	f^{-1}(T)=\{ a\in A:f(a)\in T \}
+	$$
+\end{definition}
+
+\begin{proposition}{像与原像的性质}
+	对于函数$f:X\to Y$，如下命题成立。
+	\begin{enumerate}
+		\item 如果$A\sub B\sub X$，那么
+		$$
+		f(A)\sub f(B)
+		$$
+		\item 如果$A\sub B\sub Y$，那么
+		$$
+		f^{-1}(A)\sub f^{-1}(B)
+		$$
+		\item 如果$B\sub Y$，那么
+		$$
+		f^{-1}(B^c)=(f^{-1}(B))^c
+		$$
+		\item 如果$B,D\sub Y$，那么
+		$$
+		f^{-1}(B\setminus D)=f^{-1}(B)\setminus f^{-1}(D)
+		$$
+		\item 如果$\{ B_\lambda \}_{\lambda\in\Lambda}\sub\mathscr{P}(Y)$，那么
+		$$
+		f^{-1}\left( \bigcup_{\lambda\in\Lambda}B_\lambda \right)=\bigcup_{\lambda\in\Lambda}f^{-1}(B_\lambda),\qquad 
+		f^{-1}\left( \bigcap_{\lambda\in\Lambda}B_\lambda \right)=\bigcap_{\lambda\in\Lambda}f^{-1}(B_\lambda)
+		$$
+		\item 如果$\{ A_\lambda \}_{\lambda\in\Lambda}\sub\mathscr{P}(X)$，那么
+		$$
+		f\left( \bigcup_{\lambda\in\Lambda}A_\lambda \right)=\bigcup_{\lambda\in\Lambda}f(A_\lambda),\qquad 
+		f\left( \bigcap_{\lambda\in\Lambda}[A_\lambda]_\sim \right)=\bigcap_{\lambda\in\Lambda}f(A_\lambda)
+		$$
+		\item 如果$B\sub Y$，那么
+		$$
+		f(f^{-1}(B))=B\cap\text{im }f
+		$$
+		\item 定义等价关系$x\sim y\iff f(x)=f(y)$。如果$A\sub X$，那么
+		$$
+		f^{-1}(f(A))=[A]_\sim
+		$$
+	\end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+	对于集合$S$，定义$2^S=\{ f:S\to \{0,1\} \}$，那么$2^S\cong \mathscr{P}(S)$。
+\end{proposition}
+
+\begin{proof}
+	定义函数
+	\function{\varphi}{2^S}{\mathscr{P}(S)}{f}{\{ s\in S:f(s)=1 \}}
+	下面我们证明$\varphi$为双射。
+	
+	对于单射性，任取$f_1,f_2\sub 2^S$，满足$\varphi(f_1)=\varphi(f_2)$，即$\{ s\in S:f_1(s)=1 \}=\{ s\in S:f_2(s)=1 \}$，那么$f_1=f_2$，因此$\varphi$为单射。
+	
+	对于满射性，任取$A\sub S$，令
+	$$
+	f(s)=\begin{cases}
+		1,\quad & s\in A\\
+		0,\quad & s\in S\setminus A
+	\end{cases}
+	$$
+	显然$\varphi(f)=A$，因此$\varphi$为满射。
+	
+	综上所述，$2^S\cong \mathscr{P}(S)$，原命题得证！
+\end{proof}
+
+\subsection{多重集合与指标集}
+
+\begin{definition}{多重集合 multiset}
+	定义元素可重复的集合为多重集合。事实上，多重集合可以函数的观点考虑，例如对于多重集合$M$，其中$m_k$出现了$n_k$次，那么$M$即与如下函数同构。
+	\begin{align*}
+		m:\begin{aligned}[t]
+			\{m_k:k\in\N^*\}&\longrightarrow\N^*\\
+			m_k&\longmapsto n_k
+		\end{aligned}
+	\end{align*}
+\end{definition}
+
+\begin{definition}{指标集 indexed set}
+	数列$\{ a_n \}_{n=1}^{\infty}$的本质为如下函数。
+	\begin{align*}
+		a:\begin{aligned}[t]
+			\N^*&\longrightarrow\C\\
+			n&\longmapsto a_n
+		\end{aligned}
+	\end{align*}
+\end{definition}
+
+\subsection{复合函数}
+
+\begin{definition}{复合函数 composition of function}
+	对于函数$f:A\to B$和$g:B\to C$，定义其复合函数为
+	\begin{align*}
+		f\circ g:\begin{aligned}[t]
+			A&\longrightarrow C\\
+			a&\longmapsto g(f(a))
+		\end{aligned}
+	\end{align*}
+	交换图如下
+	$$
+	\xymatrix{
+		A \ar@/_1pc/[rr]_{g\circ f} \ar^f[r] &B \ar^g[r] &C
+	}\qquad \text{或}\qquad
+	\xymatrix{
+		A \ar^f[r]\ar_{g\circ f}[dr] &B \ar^g[d]\\
+		& C
+	}
+	$$
+\end{definition}
+
+\subsection{单射，满射与双射}
+
+\begin{definition}{单射 injection}
+	称函数$f:A\to B$是单的，如果$f(a_1)=f(a_2)$，那么$a_1=a_2$。单射记作$f:A\hookrightarrow B$。
+\end{definition}
+
+\begin{definition}{满射 surjection}
+	称函数$f:A\to B$是满的，如果对于任意$b\in B$，存在$a\in A$，使得成立$f(a)=b$。满射记作$f:A\twoheadrightarrow B$。
+\end{definition}
+
+\begin{definition}{双射 bijection}
+	称函数$f:A\to B$是双射，并记作$f:A\xrightarrow{\sim}B$，如果其既单又满。
+\end{definition}
+
+\begin{example}
+	对于有$n$个元素的集合$S$，存在$n!$个双射。
+\end{example}
+
+\begin{proposition}{双射的复合为双射}{1.2.4复合}
+	双射的复合为双射。
+\end{proposition}
+
+\begin{proof}
+	如果函数$f,g$均为双射，那么其逆函数$f^{-1},g^{-1}$满足
+	$$
+	f\circ f^{-1}=f^{-1}\circ f=\mathbbm{1},\qquad 
+	g\circ g^{-1}=g^{-1}\circ g=\mathbbm{1}
+	$$
+	于是
+	$$
+	(f\circ g)(g^{-1}\circ f^{-1})=(g^{-1}\circ f^{-1})(f\circ g)=\mathbbm{1}
+	$$
+	由定理\ref{thm:1.2.2}与定理\ref{thm:1.2.3}，复合$f\circ g$为双射。
+\end{proof}
+
+\begin{proposition}{双射的逆为双射}{1.2.4逆}
+	双射的逆为双射。
+\end{proposition}
+
+\begin{proof}
+	如果函数$f$为双射，其逆函数$f^{-1}$满足
+	$$
+	f\circ f^{-1}=f^{-1}\circ f=\mathbbm{1}
+	$$
+	由定理\ref{thm:1.2.2}与定理\ref{thm:1.2.3}，逆$f^{-1}$为双射。
+\end{proof}
+
+\begin{definition}{同构的 isomorphic}
+	称集合$A$与$B$为同构的，并记做$A\cong B$，如果存在双射$f:A\to B$。
+\end{definition}
+
+\begin{proposition}{同构为等价关系}
+	同构为等价关系。
+\end{proposition}
+
+\begin{proof}
+	定义关系
+	$$
+	A\sim B \iff A\cong B \iff \exists\text{双射}f:A\to B
+	$$
+	
+	对于反身性，显然$\mathbbm{1}_A$为双射，因此$A\sim A$。
+	
+	对于对称性，如果$A\sim B$，那么存在双射$f:A\to B$，由命题\ref{pro:1.2.4逆}，$f^{-1}:B\to A$为双射，因此$B\sim A$。
+	
+	对于传递性，如果$A\sim B,B\sim C$，那么存在双射$f:A\to B,g:B\to C$，由命题\ref{pro:1.2.4复合}，$f\circ g:A\to C$为双射，因此$A\sim C$。
+	
+	因此，同构为等价关系。
+\end{proof}
+
+\begin{proposition}
+	如果$A_1\cong A_2,B_1\cong B_2$，且$A_1\cap B_1=A_2\cap B_2=\varnothing$，那么$A_1\cup B_1\cong A_2\cup B_2$。
+\end{proposition}
+
+\begin{proof}
+	由于$A_1\cong A_2,B_1\cong B_2$，那么存在双射$f:A_1\to A_2$和$g:B_1\to B_2$，定义函数
+	\begin{align*}
+		h:\begin{aligned}[t]
+			A_1\cup B_1&\longrightarrow A_2\cup B_2\\
+			x&\longmapsto 
+			\begin{cases}
+				f(x),\quad & x\in A_1\\
+				g(x),\quad & x\in B_1
+			\end{cases}
+		\end{aligned}
+	\end{align*}
+	由$A_1\cap B_1=A_2\cap B_2=\varnothing$，容易验证$h$为双射，因此$A_1\cup B_1\cong A_2\cup B_2$。
+\end{proof}
+
+\begin{definition}{逆 inverse}
+	对于双射$f:A\to B$，定义其逆为
+	\begin{align*}
+		f^{-1}:\begin{aligned}[t]
+			B&\longrightarrow A\\
+			f(a)&\longmapsto a
+		\end{aligned}
+	\end{align*}
+	交换图如下
+	$$
+	\xymatrix{
+		A \ar@/_1pc/[rr]_{\mathbbm{1}_A} \ar^f[r] &B \ar^g[r] &A
+	},\qquad 
+	\xymatrix{
+		B \ar@/_1pc/[rr]_{\mathbbm{1}_B} \ar^f[r] &A \ar^g[r] &B
+	}
+	$$
+\end{definition}
+
+\begin{definition}{左逆 left-inverse}
+	称函数$g:\im f\to A$为函数$f:A\to B$的左逆，如果成立$g\circ f=\mathbbm{1}_A$。
+\end{definition}
+
+\begin{definition}{右逆 right-inverse}
+	称函数$g:B\to A$为函数$f:A\to B$的右逆，如果成立$f\circ g=\mathbbm{1}_B$。
+\end{definition}
+
+\begin{proposition}{双射$\iff$存在左右逆}{双射的等价条件}
+	双射$\iff$存在左逆和右逆。
+\end{proposition}
+
+\begin{proof}
+	见定理\ref{thm:1.2.2}与定理\ref{thm:1.2.3}。
+\end{proof}
+
+\subsection{单态射与满态射}
+
+\begin{definition}{单态射 monomorphism}
+	称函数$f:A\to B$是单态射，如果对于任意集合$Z$，以及任意函数$\alpha_1,\alpha_2:Z\to A$，成立
+	$$
+	f\circ \alpha_1=f\circ \alpha_2\implies\alpha_1=\alpha_2
+	$$
+\end{definition}
+
+\begin{definition}{满态射 epimorphism}
+	称函数$f:A\to B$是满态射，如果对于任意集合$Z$，以及任意函数$\beta_1,\beta_2:B\to Z$，成立
+	$$
+	\beta_1\circ f=\beta_2\circ f\implies \beta_1=\beta_2
+	$$
+\end{definition}
+
+\begin{theorem}{}{1.2.2}
+	对于函数$f:A\to B$，如下命题等价。
+	\begin{enumerate}
+		\item $f$为单射。
+		\item $f$存在左逆。
+		\item $f$为单态射。
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	1$\implies$2：如果$f$为单射，定义函数
+	\function{g}{\text{im }f}{A}{f(a)}{a}
+	首先来验证$g$的定义是良好的。取$a_1,a_2\in A$，满足$f(a_1)=f(a_2)$，由$f$的单射性，$a_1=a_2$，于是$g$定义良好。其次来验证$g\circ f=\mathbbm{1}$。任取$a\in A$，注意到$(g\circ f)(a)=g(f(a))=a$，那么$g\circ f=\mathbbm{1}$。综合这两点，$f$存在左逆$g$。
+	
+	1$\implies$3：如果$f$为单射，任取$\alpha_1,\alpha_2:Z\to A$，满足$f\circ \alpha_1=f\circ \alpha_2$。任取$z\in Z$，注意到
+	$$
+	f(\alpha_1(z))=(f\circ \alpha_1)(z)=(f\circ \alpha_2)(z)=f(\alpha_2(z))
+	$$
+	于是$\alpha_1=\alpha_2$，进而$f$是单态射。
+	
+	2$\implies $3：如果$f$存在左逆$g$，任取$\alpha_1,\alpha_2$，满足$f\circ \alpha_1=f\circ \alpha_2$，那么
+	$$
+	\alpha_1=\mathbbm{1}\circ \alpha_1=g\circ f\circ \alpha_1=g\circ f\circ \alpha_2=\mathbbm{1}\circ \alpha_2=\alpha_2
+	$$
+	于是$f$是单态射。
+	
+	2$\implies $1：如果$f$存在左逆$g$，任取$a_1,a_2\in A$，满足$f(a_1)=f(a_2)$，那么
+	$$
+	a_1=\mathbbm{1}(a_1)=(g\circ f)(a_1)=g(f(a_1))=g(f(a_2))=(g\circ f)(a_2)=\mathbbm{1}(a_2)=a_2
+	$$
+	于是$f$是单射。
+	
+	3$\implies$1：如果$f$是单态射，任取$a_1,a_2\in A$，满足$f(a_1)=f(a_2)$。定义$\alpha_1:Z\to \{a_1\}$和$\alpha_2:Z\to \{a_2\}$，任取$z\in Z$，注意到
+	$$
+	(f\circ \alpha_1)(z)=f(\alpha_1(z))=f(a_1)=f(a_2)=f(\alpha_2(z))=(f\circ \alpha_2)(z)
+	$$
+	因此$f\circ\alpha_1=f\circ\alpha_2$，于是$\alpha_1=\alpha_2$，即$a_1=a_2$，进而$f$是单射。
+\end{proof}
+
+\begin{theorem}{}{1.2.3}
+	对于函数$f:A\to B$，如下命题等价。
+	\begin{enumerate}
+		\item $f$为满射。
+		\item $f$存在右逆。
+		\item $f$为满态射。
+	\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+	1$\implies$2：如果$f$是满射，定义函数
+	\function{g}{B}{A}{b}{a}
+	这里要说明的是对于特别的$b\in B$，$f^{-1}(b)$中的元素可能不唯一，这时候任取其一即可，此时便说明$g$定义良好。然后我们来验证$f\circ g=\mathbbm{1}$。任取$b\in B$，注意到$(f\circ g)(b)=f(g(b))=f(f^{-1}(b))=b$，那么$f\circ g=\mathbbm{1}$，进而$f$存在右逆$g$。
+	
+	1$\implies$3：如果$f$为满射，任取$\beta_1,\beta_2$，满足$\beta_1\circ f=\beta_2\circ f$。任取$b\in B$，存在$a\in A$，使得成立$f(a)=b$，因此
+	$$
+	\beta_1(b)=\beta_1(f(a))=(\beta_1\circ f)(a)=(\beta_2\circ f)(a)=\beta_2(f(a))=\beta_2(b)
+	$$
+	于是$\beta_1=\beta_2$，进而$f$是满态射。
+	
+	2$\implies $3：如果$f$存在右逆$g$，任取$\beta_1,\beta_2$，满足$\beta_1\circ f=\beta_2\circ f$，那么
+	$$
+	\beta_1=\beta_1\circ \mathbbm{1}=\beta_1\circ f\circ g=\beta_2\circ f\circ g=\beta_2\circ \mathbbm{1}=\beta_2
+	$$
+	于是$f$是满态射。
+	
+	2$\implies$1：如果$f$存在右逆$g$，任取$b\in B$，注意到$g(b)\in A$，且$f(g(b))=(f\circ g)(b)=\mathbbm{1}(b)=b$，因此$f$为满射。
+	
+	3$\implies$1：如果$f$是满态射，任取$b\in B$。定义$\beta_1:B\to\{1\}$以及
+	\begin{align*}
+		\beta_2: \begin{aligned}[t]
+			B &\longrightarrow \{0,1\}\\
+			b &\longmapsto \begin{cases}
+				1,\quad & b\in\mathrm{im}f\\
+				0,\quad & b\in B\setminus\mathrm{im}f
+			\end{cases}
+		\end{aligned}
+	\end{align*}
+	任取$a\in A$，注意到
+	$$
+	(\beta_1\circ f)(a)=\beta_1(f(a))=1=\beta_2(f(a))=(\beta_2\circ f)(a)
+	$$
+	因此$\beta_1\circ f=\beta_2\circ f$，于是$\beta_1=\beta_2$，即$b\in\mathrm{im}f$，进而$f$是满射。
+\end{proof}
+
+\subsection{自然投影}
+
+\begin{definition}{自然投影 natural projection}
+	对于集合$A$和$B$，定义其自然投影为
+	\begin{align*}
+		\pi_A: \begin{aligned}[t]
+			A\times B&\longrightarrow A\\
+			(a,b)&\longmapsto a
+		\end{aligned}
+	\end{align*}
+	\begin{align*}
+		\pi_B: \begin{aligned}[t]
+			A\times B\longrightarrow B\\
+			(a,b)\longmapsto B
+		\end{aligned}
+	\end{align*}
+	交换图如下
+	$$
+	\xymatrix{
+		& A\times B\ar@{^{}->>}[ld]_{\pi_A} \ar@{->>}[rd]^{\pi_B} &\\
+		A &           & B
+	}
+	$$
+\end{definition}
+
+\begin{example}
+	解释函数$f:A\to B$如何决定$\pi_A$的右逆。
+	
+	由于
+	\function{\pi_A}{A\times B}{A}{(a,b)}{a}
+	定义
+	\function{\varphi}{A}{A\times B}{a}{(a,f(a))}
+	显然$\pi_A\circ \varphi=\mathbbm{1}_A$，且$g$由$f$决定。交换图如下
+	$$
+	\xymatrix@=11ex{
+		A \ar@/_2pc/[rr]_{\mathbbm{1}_A} \ar@{^{(}->}[r]^{\varphi}_{a\mapsto (a,f(a))} & A\times B \ar@{->>}[r]^{\pi_A}_{(a,b)\mapsto a} & A
+	}
+	$$
+\end{example}
+
+\subsection{正则分解}
+
+\begin{definition}{正则分解 canonical decomposition}
+	对于函数$f:A\to B$，以及等价关系$a_1\sim a_2\iff f(a_1)=f(a_2)$，$f$可作如下正则分解。
+	$$
+	\xymatrix@=9ex{
+		A \ar@/^2pc/[rrr]^{f} \ar@{->>}[r]_{a\mapsto[a]_{\sim}} & A/\sim \ar@{->}[r]_{[a]_\sim\mapsto f(a)}^{\sim} & \mathrm{im}f \ar@{^{(}->}[r]_{f(a)\mapsto f(a)} & B
+	}
+	$$
+\end{definition}
+
+\begin{example}
+	描述如下函数的正则分解：
+	\function{\varphi}{\R}{\C}{r}{\mathrm{e}^{2\pi i r}}
+	定义等价关系
+	$$
+	r_1\sim r_2 \iff \varphi(r_1)=\varphi(r_2) \iff r_1-r_2\in\Z
+	$$
+	那么$\varphi$的正则分解为
+	$$
+	\xymatrix@=10ex{
+		\R \ar@/^2pc/[rrr]^{\varphi} \ar@{->>}[r]_(0.45){r\mapsto(r)} & [0,1) \ar@{->}[r]_(0.4){(r)\mapsto \mathrm{e}^{2\pi i r}}^(0.4){\sim} & \partial\mathbb{D} \ar@{^{(}->}[r]_(0.625){\mathrm{e}^{2\pi i r}\mapsto \mathrm{e}^{2\pi i r}} & \C
+	}
+	$$
+\end{example}
+
+\begin{example}
+	取$f:\R\to\R$为$x\mapsto x^2$，等价关系$x\sim y\iff |x|=|y|$，那么$f$​可做如下正则分解。
+	$$
+	\xymatrix@=9ex{
+		\R \ar@/^2pc/[rrr]^{f} \ar@{->>}[r]_{x\mapsto|x|} & \R^2\cup\{0\} \ar@{->}[r]_{|x|\mapsto x^2}^{\sim} & \R^2\cup\{0\} \ar@{^{(}->}[r]_{x^2\mapsto x^2} & \R
+	}
+	$$
+\end{example}
+
+\section{范畴论}
+
+\subsection{定义}
+
+\begin{definition}{范畴 category}
+	一个范畴$\mathsf{C}$包含如下两类内容。
+	\begin{enumerate}
+		\item 对象(object)：$\mathrm{Obj}(\mathsf{C})$
+		\item 态射(morphism)：$\mathrm{Hom}_\mathsf{C}(A,B)$，满足如下公理。其中称$A$为源(source)，$B$为目标(target)。
+		\begin{itemize}
+			\item 恒等态射：对于任意对象$S\in\mathrm{Obj}(\mathsf{C})$，存在恒等态射$\mathbbm{1}_S\in\mathrm{Hom}_\mathsf{C}(S,S)$。同时，对于任意态射$f\in \mathrm{Hom}_\mathsf{C}(A,B)$，成立$f\circ\mathbbm{1}_A=f$和$\mathbbm{1}_B\circ f=f$。
+			\item 态射复合：对于任意对象$A,B,C\in\mathrm{Obj}(\mathsf{C})$，存在态射复合映射
+			
+		\begin{align*}
+				\circ :\begin{aligned}[t]
+					\mathrm{Hom}_\mathsf{C}(A,B)\times \mathrm{Hom}_\mathsf{C}(B,C)&\longrightarrow \mathrm{Hom}_\mathsf{C}(A,C)\\
+					(f,g)&\longmapsto g\circ f
+				\end{aligned}
+			\end{align*}
+			\item 结合律：对于任意态射$f\in \mathrm{Hom}_\mathsf{C}(A,B),g\in \mathrm{Hom}_\mathsf{C}(B,C),h\in \mathrm{Hom}_\mathsf{C}(C,D)$，成立$(h\circ g)\circ f=h\circ (g\circ f)$。
+		\end{itemize}
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}{不交性}
+	称态射$\mathrm{Hom}_\mathsf{C}(A,B)$和$\mathrm{Hom}_\mathsf{C}(C,D)$是不相交的，如果$A\ne C$或$B\ne D$。
+\end{definition}
+
+\begin{definition}{自态射 endormorphism}
+	对于范畴$\mathsf{C}$，称态射$\mathrm{End}_\mathsf{C}(S)=\mathrm{Hom}_\mathsf{C}(S,S)$为对象$S\in\mathrm{Obj}(\mathsf{C})$的自态射。注意到，$\mathbbm{1}_S\in \mathrm{End}_\mathsf{C}(S)$，且如果$f,g\in\mathrm{End}_\mathsf{C}(S)$，那么$g\circ f\in\mathrm{End}_\mathsf{C}(S)$。
+\end{definition}
+
+\begin{definition}{子范畴 subcategory}
+	称$\mathsf{C}'$为范畴$\mathsf{C}$的子范畴，如果$\mathrm{Obj}(\mathsf{C'})\sub\mathrm{Obj}(\mathsf{C})$，且对于任意对象$A,B\in\mathsf{C'}$，成立$\mathrm{Hom}_\mathsf{C'}(A,B)\sub\mathrm{Hom}_\mathsf{C}(A,B)$。
+\end{definition}
+
+\begin{definition}{满的 full}
+	称范畴$\mathsf{C}$的子范畴$\mathsf{C}'$是满的，如果对于任意对象$A,B\in\mathsf{C'}$，成立$\mathrm{Hom}_\mathsf{C'}(A,B)=\mathrm{Hom}_\mathsf{C}(A,B)$。
+\end{definition}
+
+\subsection{范畴例子}
+
+\begin{example}
+	集合范畴：
+	\begin{itemize}
+		\item $\mathrm{Obj}(\mathsf{Set})$：所有集合。
+		\item $\mathrm{Hom}_{\mathsf{Set}}(A,B)=B^A$
+	\end{itemize}
+\end{example}
+	
+\begin{example}
+	矩阵范畴：
+	\begin{itemize}
+		\item $\mathrm{Obj}(\mathsf{V})=\N$
+		\item $\mathrm{Hom}_{\mathsf{V}}(m,n)=\{ \{a_{ij}\}_{m\times n}:a_{ij}\in\R \}$
+	\end{itemize}
+\end{example}
+
+\begin{example}
+	余范畴(opposite category)：
+	\begin{itemize}
+		\item $\mathrm{Obj}(\mathsf{C}^{\mathrm{op}})=\mathrm{Obj}(\mathsf{C})$
+		\item $\mathrm{Hom}_{\mathsf{C}^{\mathrm{op}}}(A,B)=\mathrm{Hom}_{\mathsf{C}}(B,A)$
+	\end{itemize}
+\end{example}
+
+\begin{example}
+	点范畴：令$*\in\mathsf{Set}$，定义如下由点$*$诱导的集合范畴$\mathsf{Set}^*$。
+	\begin{itemize}
+		\item 对象：$\mathrm{Obj}(\mathsf{Set}^*)=(S,s)$，意指态射$\mathrm{Hom}_\mathsf{C}(\{*\},S)$将$*$映为$s\in S$。
+		\item 态射：
+		$$
+		\mathrm{Hom}_{\mathsf{Set}^*}((S,s),(T,t))=\{ \sigma:S\to T\mid \sigma(s)=t \}
+		$$
+	\end{itemize}
+\end{example}
+
+\begin{example}
+	关系范畴：令$S$为一个集合，关系$\sim$满足自反性和传递性，定义如下由$S$以及$\sim$诱导的关系范畴$\mathsf{C}_{S,\sim}$。
+	\begin{itemize}
+		\item $\mathrm{Obj}(\mathsf{C}_{S,\sim})=S$
+		\item $$
+		\mathrm{Hom}_{\mathsf{C}_{S,\sim}}(a,b)=\begin{cases}
+			\{(a,b)\},\quad & a\sim b\\
+			\varnothing,\quad & a\not\sim b
+		\end{cases}
+		$$
+	\end{itemize}
+\end{example}
+
+\begin{example}
+	切片范畴(slice category)和余切范畴(co-slice category)：对于范畴$\mathsf{C}$，以及对象$S\in\mathrm{Obj}(\mathsf{C})$，定义如下由$S$诱导的切片范畴$\mathsf{C}_S$。
+	\begin{itemize}
+		\item 对象：
+		$$
+		\mathrm{Obj}(\mathsf{C}_S)=\{ (f,A):f\in\mathrm{Hom}_\mathsf{C}(A,S),A\in\mathrm{Obj}(\mathsf{C}) \}
+		$$
+		通常以如下图表示
+		$$
+		\xymatrix{
+			A\ar_f[d]\\
+			S
+		}
+		$$
+		\item 态射：
+		$$
+		\mathrm{Hom}_{\mathsf{C}_A}((f,A),(g,B))=\{ \sigma\in\mathrm{Hom}_\mathsf{C}(A,B):f=g\circ\sigma \}
+		$$
+		通常以如下交换图表示
+		$$
+		\xymatrix{
+			A \ar[rr]^\sigma \ar[dr]_{f} & & B \ar[dl]^{g}\\
+			&S
+		}
+		$$
+	\end{itemize}
+	对于范畴$\mathsf{C}$，以及对象$S\in\mathrm{Obj}(\mathsf{C})$，定义如下由$S$诱导的余切范畴$\mathsf{C}^S$。
+	\begin{itemize}
+		\item 对象：
+		$$
+		\mathrm{Obj}(\mathsf{C}_S)=\{ (f,A):f\in\mathrm{Hom}_\mathsf{C}(S,A),A\in\mathrm{Obj}(\mathsf{C}) \}
+		$$
+		通常以如下图表示
+		$$
+		\xymatrix{
+			S\ar_f[d]\\
+			A
+		}
+		$$
+		\item 态射：
+		$$
+		\mathrm{Hom}_{\mathsf{C}_A}((f,A),(g,B))=\{ \sigma\in\mathrm{Hom}_\mathsf{C}(A,B):g=\sigma\circ f \}
+		$$
+		通常以如下交换图表示
+		$$
+		\xymatrix{
+			&S\ar[dl]_{f} \ar[dr]^{g}&\\
+			A \ar[rr]_\sigma  & & B 
+		}
+		$$
+	\end{itemize}
+\end{example}
+
+\begin{example}
+	对于对象$A,B\in\mathsf{C}$，定义范畴$\mathsf{C}_{A,B}$如下。
+	$$
+	\mathrm{Obj}:\qquad
+	\xymatrix{
+		& A \\
+		Z\ar[ur]^f \ar[dr]_g \\
+		& B
+	}
+	\qquad\qquad 
+	\mathrm{Hom}:\qquad
+	\xymatrix{
+		& &A \\
+		Z_1 \ar[r]^{\sigma} \ar@/^/[urr]^{f_1} \ar@/_/[drr]_{g_1} & Z_2 \ar[ur]^{f_2} \ar[dr]_{g_2} \\
+		& &B
+	}
+	$$
+	
+	对于对象$A,B\in\mathsf{C}$，定义范畴$\mathsf{C}^{A,B}$如下。
+	$$
+	\mathrm{Obj}:\qquad
+	\xymatrix{
+		A \ar[dr]^f&\\
+		&Z  \\
+		B \ar[ur]_g&
+	}
+	\qquad\qquad 
+	\mathrm{Hom}:\qquad
+	\xymatrix{
+		A \ar[dr]^{f_1} \ar@/^/[drr]^{f_2} & & \\
+		& Z_1 \ar[r]^\sigma & Z_2 \\
+		B \ar[ur]_{g_1} \ar@/_/[urr]_{g_2} & & \\
+	}
+	$$
+\end{example}
+
+\begin{example}
+	对于态射$\alpha:A\to C,\beta:B\to C$，定义范畴$\mathsf{C}_{\alpha,\beta}$如下。
+	$$
+	\mathrm{Obj}:\qquad
+	\xymatrix{
+		& A \ar[dr]^\alpha \\
+		Z\ar[ur]^f \ar[dr]_g & & C\\
+		& B \ar[ur]_\beta
+	}
+	\qquad 
+	\mathrm{Hom}:\qquad
+	\xymatrix{
+		& &A \ar[dr]^\alpha\\
+		Z_1 \ar[r]^{\sigma} \ar@/^/[urr]^{f_1} \ar@/_/[drr]_{g_1} & Z_2 \ar[ur]^{f_2} \ar[dr]_{g_2} & & C\\
+		& &B \ar[ur]_\beta
+	}
+	$$
+	
+	对于态射$\alpha:C\to A,\beta:C\to B$，定义范畴$\mathsf{C}^{\alpha,\beta}$​如下。
+	$$
+	\mathrm{Obj}:\qquad
+	\xymatrix{
+		& A \ar[dr]^f \\
+		C\ar[ur]^\alpha \ar[dr]_\beta & & Z\\
+		& B \ar[ur]_g
+	}
+	\qquad 
+	\mathrm{Hom}:\qquad
+	\xymatrix{
+		& A \ar[dr]^{f_1} \ar@/^/[rrd]^{f_2} & & \\
+		C \ar[ur]^\alpha \ar[dr]_\beta & & Z_1 \ar[r]^\sigma & Z_2 \\
+		& B \ar[ur]_{g_1} \ar@/_/[rru]_{g_2} & & \\
+	}
+	$$
+\end{example}
+
+\section{态射}
+
+\subsection{同构}
+
+\begin{definition}{左逆态射 left-inverse morphism}
+	对于范畴$\mathsf{C}$，以及对象$A,B\in\mathrm{Obj}(\mathsf{C})$，称态射$g\in\mathrm{Hom}_\mathsf{C}(B,A)$为态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$的左逆态射，如果成立$g\circ f=\mathbbm{1}_A$。
+\end{definition}
+
+\begin{definition}{右逆态射 right-inverse morphism}
+	对于范畴$\mathsf{C}$，以及对象$A,B\in\mathrm{Obj}(\mathsf{C})$，称态射$g\in\mathrm{Hom}_\mathsf{C}(B,A)$为态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$的右逆态射，如果成立$f\circ g=\mathbbm{1}_A$。
+\end{definition}
+
+\begin{definition}{同构态射 isomorphism}
+	对于范畴$\mathsf{C}$，以及对象$A,B\in\mathrm{Obj}(\mathsf{C})$，称态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$为同构态射，如果存在逆态射$g\in\mathrm{Hom}_\mathsf{C}(B,A)$，使得成立
+	$$
+	g\circ f=\mathbbm{1}_A,\qquad f\circ g=\mathbbm{1}_B
+	$$
+\end{definition}
+
+\begin{definition}{同构的 isomorphic}
+	对于范畴$\mathsf{C}$，称对象$A,B\in\mathrm{Obj}(\mathsf{C})$是同构的，且记作$A\cong B$，如果存在同构态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$。
+\end{definition}
+
+\begin{definition}{自同构态射 automorphism}
+	对于范畴$\mathsf{C}$，称同构态射$f\in\mathrm{Hom}_\mathsf{C}(S,S)$为对象$S\in\mathrm{Obj}(\mathsf{C})$的自同构态射。
+\end{definition}
+
+\begin{definition}{自同构态射群 automorphism group}
+	对于范畴$\mathsf{C}$，对象$S\in\mathrm{Obj}(\mathsf{C})$的自同构态射构成自同构态射群$\mathrm{Aut}_\mathsf{C}(S)$。
+\end{definition}
+
+\begin{proposition}{同构态射的性质}
+	\begin{itemize}
+		\item 同构态射存在且存在唯一逆。
+		\item 恒等态射$\mathbbm{1}$为同构态射，且$\mathbbm{1}^{-1}=\mathbbm{1}$。
+		\item 同构态射$f$的逆$f^{-1}$亦为同构态射，且$(f^{-1})^{-1}=f$。
+		\item 如果$f,g$均为同构态射，那么$g\circ f$亦为同构态射，且$(g\circ f)^{-1}=f^{-1}\circ g^{-1}$。
+	\end{itemize}
+\end{proposition}
+
+\subsection{单态射与满态射}
+
+\begin{definition}{单态射 monomorphism}
+	对于范畴$\mathsf{C}$，以及对象$A,B\in\mathrm{Obj}(\mathsf{C})$，称态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$为单态射，如果对于任意对象$Z\in\mathrm{Obj}(\mathsf{C})$，以及任意态射$\alpha_1,\alpha\in\mathrm{Hom}_\mathsf{C}(Z,A)$，成立
+	$$
+	f\circ \alpha_1=f\circ \alpha_2
+	\implies
+	\alpha_1=\alpha_2
+	$$
+\end{definition}
+
+\begin{definition}{满态射 epimorphism}
+	对于范畴$\mathsf{C}$，以及对象$A,B\in\mathrm{Obj}(\mathsf{C})$，称态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$为满态射，如果对于任意对象$Z\in\mathrm{Obj}(\mathsf{C})$，以及任意态射$\beta_1,\beta\in\mathrm{Hom}_\mathsf{C}(B,Z)$，成立
+	$$
+	\beta_1\circ f=\beta_2\circ f
+	\implies
+	\beta_1=\beta_2
+	$$
+\end{definition}
+
+\begin{proposition}{存在左逆$\implies$单态射}{存在左逆则为单态射}
+	对于范畴$\mathsf{C}$，以及对象$A,B\in\mathrm{Obj}(\mathsf{C})$，如果态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$存在左逆态射，那么态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$为单态射。
+\end{proposition}
+
+\begin{proof}
+	如果态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$存在左逆态射$g\in\mathrm{Hom}_\mathsf{C}(B,A)$，那么任取$\alpha_1,\alpha_2$，满足$f\circ \alpha_1=f\circ \alpha_2$，由于
+	$$
+	\alpha_1=\mathbbm{1}\circ \alpha_1=g\circ f\circ \alpha_1=g\circ f\circ \alpha_2=\mathbbm{1}\circ \alpha_2=\alpha_2
+	$$
+	于是$f$是单态射。
+\end{proof}
+
+\begin{proposition}{存在右逆$\implies$满态射}
+	对于范畴$\mathsf{C}$，以及对象$A,B\in\mathrm{Obj}(\mathsf{C})$，如果态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$存在右逆态射，那么态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$为满态射。
+\end{proposition}
+
+\begin{proof}
+	如果态射$f\in\mathrm{Hom}_\mathsf{C}(A,B)$存在右逆态射$g\in\mathrm{Hom}_\mathsf{C}(B,A)$，那么任取$\beta_1,\beta_2$，满足$\beta_1\circ f=\beta_2\circ f$，由于
+	$$
+	\beta_1=\beta_1\circ \mathbbm{1}=\beta_1\circ f\circ g=\beta_2\circ f\circ g=\beta_2\circ \mathbbm{1}=\beta_2
+	$$
+	于是$f$是满态射。
+\end{proof}
+
+\begin{proposition}
+	单态射的复合为单态射，满态射的复合为满态射。
+\end{proposition}
+
+\section{万有性质}
+
+\subsection{初始对象与终止对象}
+
+\begin{definition}{初始对象 initial object}
+	对于范畴$\mathsf{C}$，称对象$I\in\mathrm{Obj}(\mathsf{C})$为$\mathsf{C}$的初始对象，如果对于任意对象$S\in\mathrm{Obj}(\mathsf{C})$，存在且存在唯一$\mathsf{C}$中的态射$I\to S$。
+	$$
+	\xymatrix{
+		I\ar[r]^{\exists!\varphi}&\forall S
+	}
+	$$
+\end{definition}
+
+\begin{definition}{终止对象 final object}
+	对于范畴$\mathsf{C}$，称对象$F\in\mathrm{Obj}(\mathsf{C})$为$\mathsf{C}$的终结对象，如果对于任意对象$S\in\mathrm{Obj}(\mathsf{C})$，存在且存在唯一$\mathsf{C}$中的态射$S\to F$。
+	$$
+	\xymatrix{
+		S\ar[r]^{\exists!\varphi}&\forall F
+	}
+	$$
+\end{definition}
+
+\begin{definition}{终端对象 terminal object}
+	初始对象和终止对象统称为终端对象。
+\end{definition}
+
+\begin{proposition}{终端对象的结构}
+	对于范畴$\mathsf{C}$，终端对象至多同构。
+	\begin{itemize}
+		\item 如果$I_1,I_2$均为$\mathsf{C}$的初始对象，那么$I_1\cong I_2$，且同构态射为$I_1\to I_2$。
+		\item 如果$F_1,F_2$均为$\mathsf{C}$的终结对象，那么$F_1\cong F_2$，且同构态射为$F_1\to F_2$。
+	\end{itemize}
+\end{proposition}
+
+\begin{proposition}
+	范畴的终止对象为其余范畴的初始对象。
+	
+	范畴的初始对象为其余范畴的终止对象。
+\end{proposition}
+
+\subsection{万有性质}
+
+\begin{definition}{万有性质 universal property}
+	称结构(construction)满足万有性质，如果其可被视为一个范畴的终端对象。
+\end{definition}
+
+\subsection{商}
+
+\begin{definition}{商范畴 quotient category}
+	令$\sim$为集合$S$上的等价关系，定义商范畴$\mathsf{C}_{\sim}^S$如下。
+	
+	\begin{itemize}
+		\item 对象：$\mathrm{Obj}(\mathsf{C}_{\sim}^S)=\{ (\varphi,T)\mid \varphi:S\to T,a\sim b\implies \varphi(a)=\varphi(b) \}$
+		\item 态射：$(\varphi,A)\to(\psi,B)$为如下交换图。
+		$$
+		\xymatrix{
+			A \ar^\sigma[rr]& &B\\
+			& S \ar[ul]^{\varphi} \ar[ur]_{\psi} &
+		}
+		$$
+	\end{itemize}
+\end{definition}
+
+\begin{proposition}{商范畴的初始对象}
+	对于商范畴$\mathsf{C}_{\sim}^S$，$(\pi,S/\sim)$为其初始对象，交换图为
+	$$
+	\xymatrix{
+		S/\sim \ar^{\exists!\sigma}[rr]& &\forall T\\
+		& S \ar[ul]^{\pi} \ar[ur]_{\forall\varphi} &
+	}
+	$$
+\end{proposition}
+
+\subsection{积}
+
+\begin{proposition}{范畴$\mathsf{C}_{A,B}$的终止对象}
+	对于对象$A,B\in\mathsf{C}$，定义范畴$\mathsf{C}_{A,B}$如下。
+	$$
+	\mathrm{Obj}:\qquad
+	\xymatrix{
+		& A \\
+		Z\ar[ur]^f \ar[dr]_g \\
+		& B
+	}
+	\qquad\qquad 
+	\mathrm{Hom}:\qquad
+	\xymatrix{
+		& &A \\
+		Z_1 \ar[r]^{\sigma} \ar@/^/[urr]^{f_1} \ar@/_/[drr]_{g_1} & Z_2 \ar[ur]^{f_2} \ar[dr]_{g_2} \\
+		& &B
+	}
+	$$
+	那么其终止对象为
+	$$
+	\xymatrix{
+		& A \\
+		A\times B\ar[ur]^{\pi_A} \ar[dr]_{\pi_B} \\
+		& B
+	}
+	$$
+\end{proposition}
+
+\begin{definition}{积 product}
+	称范畴$\mathsf{C}$存在积，如果对于任意对象$A,B\in\mathrm{Obj}(\mathsf{C})$，范畴$\mathsf{C}_{A,B}$存在终止对象。称该终止对象为$\mathsf{C}$关于$A$和$B$的积，记为$A\times B$，以及$A\times B\to A$和$A\times B\to B$。
+\end{definition}
+
+\begin{example}
+	\begin{itemize}
+		\item 集合范畴$\mathsf{Set}$中，$A\times B$表示$A$与$B$的Descartes积。
+		\item 关系范畴$\mathsf{C}_{\R,\le}$中，$a\times b$表示$a$与$b$的最小值$\min(a,b)$。
+		\item 群范畴$\mathsf{Grp}$中，$(G,*_G)\times (H,*_H)$表示直积$(G\times H,*_{G\times H})$。
+		\item Abel群范畴$\mathsf{Ab}$中，$(G,*_G)\times (H,*_H)$表示直积$(G\times H,*_{G\times H})$。
+	\end{itemize}
+\end{example}
+
+\subsection{余积}
+
+\begin{proposition}{范畴$\mathsf{C}^{A,B}$的初始对象}
+	对于对象$A,B\in\mathsf{C}$，定义范畴$\mathsf{C}^{A,B}$​如下。
+	$$
+	\mathrm{Obj}:\qquad
+	\xymatrix{
+		A \ar[dr]^f&\\
+		&Z  \\
+		B \ar[ur]_g&
+	}
+	\qquad\qquad 
+	\mathrm{Hom}:\qquad
+	\xymatrix{
+		A \ar[dr]^{f_1} \ar@/^/[drr]^{f_2} & & \\
+		& Z_1 \ar[r]^\sigma & Z_2 \\
+		B \ar[ur]_{g_1} \ar@/_/[urr]_{g_2} & & \\
+	}
+	$$
+	那么其初始对象为
+	$$
+	\xymatrix{
+		A \ar[dr]^{i_A}&\\
+		&A\sqcup B  \\
+		B \ar[ur]_{i_B}&
+	}
+	$$
+\end{proposition}
+
+\begin{definition}{余积 coproduct}
+	称范畴$\mathsf{C}$存在余积，如果对于任意对象$A,B\in\mathrm{Obj}(\mathsf{C})$，范畴$\mathsf{C}^{A,B}$存在初始对象。称该初始对象为$\mathsf{C}$关于$A$和$B$的余积，记为$A\sqcup B$，以及$A\sqcup B\to A$和$A\sqcup B\to B$。
+\end{definition}
+
+\begin{example}
+	\begin{itemize}
+		\item 集合范畴$\mathsf{Set}$中，$A\sqcup  B$表示$A$与$B$的不交并。
+		\item 关系范畴$\mathsf{C}_{\R,\le}$中，$a\sqcup b$表示$a$与$b$的最大值$\max(a,b)$。
+		\item 群范畴$\mathsf{Grp}$中，$(G,*_G)\sqcup (H,*_H)$表示自由积$G*H$。
+		\item Abel群范畴$\mathsf{Ab}$中，$(G,*_G)\sqcup (H,*_H)$表示为直和$G\oplus H$。
+	\end{itemize}
+\end{example}
+
+% \end{document}
